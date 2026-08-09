@@ -180,7 +180,7 @@ const Hero = () => {
               onClick={handleScrollToContact}
               className="btn-gold"
             >
-              Initiate Ritual
+              Awaken Resonance
             </a>
           </div>
         </div>
