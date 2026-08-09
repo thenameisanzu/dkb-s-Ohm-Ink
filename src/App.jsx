@@ -25,6 +25,25 @@ const App = () => {
     const video = videoRef.current
     if (!video) return
 
+    // Detect mobile, tablet, or touch-capable viewports to prevent seeking stutter on Safari/Chrome
+    const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.innerWidth <= 1024
+
+    if (isTouchDevice) {
+      video.loop = true
+      video.muted = true
+      video.playsInline = true
+      
+      const playVideo = async () => {
+        try {
+          await video.play()
+        } catch (err) {
+          console.log('Video autoplay blocked or interrupted:', err)
+        }
+      }
+      playVideo()
+      return
+    }
+
     let initialized = false
     let cleanupVideoScrub = null
 
@@ -244,6 +263,7 @@ const App = () => {
         src="/video/one.mp4"
         muted
         playsInline
+        loop
         preload="auto"
       />
       <div className="dn-vignette" />

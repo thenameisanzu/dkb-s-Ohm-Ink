@@ -29,6 +29,16 @@
   padding: 0;
 }
 
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+button:active, a:active, [role="button"]:active {
+  transform: scale(0.96) !important;
+}
+
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
@@ -548,6 +558,12 @@ h1, h2, h3, h4, h5, h6 {
   100% { height: 12px; }
 }
 
+/* Counter Button Sizing */
+.counter-btn {
+  width: 32px;
+  height: 32px;
+}
+
 @media (max-width: 768px) {
   .scroll-progress-container {
     display: none !important;
@@ -555,6 +571,14 @@ h1, h2, h3, h4, h5, h6 {
   .audio-toggle-container {
     left: 1.5rem !important;
     bottom: 1.5rem !important;
+  }
+  .audio-toggle-circle {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .counter-btn {
+    width: 44px !important;
+    height: 44px !important;
   }
 }
 

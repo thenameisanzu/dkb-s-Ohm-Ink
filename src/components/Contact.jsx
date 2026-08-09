@@ -278,9 +278,8 @@ const Contact = () => {
                   <button
                     type="button"
                     onClick={() => setHours((prev) => Math.max(1, prev - 1))}
+                    className="counter-btn"
                     style={{
-                      width: '32px',
-                      height: '32px',
                       borderRadius: '50%',
                       border: '1px solid var(--color-gold)',
                       backgroundColor: 'transparent',
@@ -322,9 +321,8 @@ const Contact = () => {
                   <button
                     type="button"
                     onClick={() => setHours((prev) => Math.min(5, prev + 1))}
+                    className="counter-btn"
                     style={{
-                      width: '32px',
-                      height: '32px',
                       borderRadius: '50%',
                       border: '1px solid var(--color-gold)',
                       backgroundColor: 'transparent',
