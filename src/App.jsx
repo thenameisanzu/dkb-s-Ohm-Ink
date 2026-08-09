@@ -132,17 +132,16 @@ const App = () => {
         <div
           onClick={(e) => handleNavClick(e, 'hero')}
           style={{
-            fontFamily: 'var(--font-secondary)',
-            fontSize: '0.8rem',
-            fontWeight: '800',
-            letterSpacing: '0.25em',
+            fontFamily: 'var(--font-body)',
+            fontSize: '0.9rem',
+            fontWeight: '500',
+            letterSpacing: '0.15em',
             color: 'var(--color-text-light)',
-            textTransform: 'uppercase',
             cursor: 'pointer',
             userSelect: 'none'
           }}
         >
-          DKB'S <span className="text-gold" style={{ textShadow: '0 0 10px var(--color-gold-glow)' }}>OHM INK</span>
+          dkb's <span className="text-gold" style={{ textShadow: '0 0 10px var(--color-gold-glow)' }}>ohm ink</span>
         </div>
 
         {/* Navigation links */}
