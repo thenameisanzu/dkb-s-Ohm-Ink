@@ -395,6 +395,9 @@ h1, h2, h3, h4, h5, h6 {
   .hero-left-col::before {
     display: none !important;
   }
+  .hero-vertical-line {
+    display: none !important;
+  }
   .hero-right-col {
     justify-content: center !important;
   }
@@ -665,12 +668,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  section {
+    padding-bottom: 7.5rem !important;
+  }
   .scroll-progress-container {
     display: none !important;
   }
   .audio-toggle-container {
     left: 1.5rem !important;
     bottom: 1.5rem !important;
+  }
+  .audio-toggle-container span {
+    display: none !important;
+  }
+  .audio-wave-visualizer {
+    display: none !important;
   }
   .audio-toggle-circle {
     width: 44px !important;

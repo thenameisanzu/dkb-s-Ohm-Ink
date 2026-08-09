@@ -96,6 +96,7 @@ const Hero = () => {
           {/* Animated vertical divider */}
           <div
             ref={dividerRef}
+            className="hero-vertical-line"
             style={{
               position: 'absolute',
               left: 0,
