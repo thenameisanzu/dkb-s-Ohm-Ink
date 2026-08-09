@@ -35,21 +35,6 @@ const CentralYantra = () => {
 
     // Animate yantra properties based on scroll depth
     scrollTl
-      // Transition to Philosophy (Swell & fade out first, then land in place)
-      .to(container, {
-        scale: 1.6,
-        opacity: 0.04,
-        x: '10%',
-        duration: 0.5,
-        ease: 'power1.in'
-      })
-      .to(container, {
-        scale: 0.8,
-        x: '20%',
-        opacity: 0.15,
-        duration: 0.5,
-        ease: 'power1.out'
-      })
       // Transition to Symbol (Swell up as we transit, then land central & large)
       .to(container, {
         scale: 1.8,

@@ -5,7 +5,7 @@ import Loader from './components/Loader'
 import CosmicCanvas from './components/CosmicCanvas'
 import CentralYantra from './components/CentralYantra'
 import Hero from './components/Hero'
-import Philosophy from './components/Philosophy'
+
 import SymbolSection from './components/Symbol'
 import Contact from './components/Contact'
 import AudioDrone, { triggerAudioPlay } from './components/AudioDrone'
@@ -147,7 +147,7 @@ const App = () => {
 
         {/* Navigation links */}
         <div className="navbar-links">
-          {['philosophy', 'symbol', 'contact'].map((section) => (
+          {['symbol', 'contact'].map((section) => (
             <a
               key={section}
               href={`#${section}`}
@@ -194,7 +194,7 @@ const App = () => {
       {/* Layout Content Sections */}
       <main style={{ position: 'relative', zIndex: 10 }}>
         <Hero />
-        <Philosophy />
+
         <SymbolSection />
         <Contact />
       </main>
