@@ -67,11 +67,6 @@ const Loader = ({ onComplete }) => {
       duration: 0.8,
       ease: 'power2.out'
     }, '-=0.6')
-    .to(geometryRef.current, {
-      rotation: 12,
-      duration: 1.2,
-      ease: 'power2.out'
-    }, '-=0.6')
     // Hold animation for a moment
     .to({}, { duration: 0.4 })
 
