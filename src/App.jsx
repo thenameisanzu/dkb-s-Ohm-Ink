@@ -16,82 +16,9 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true)
   const cursorRef = useRef(null)
   const followerRef = useRef(null)
-  const videoRef = useRef(null)
   const progressBarRef = useRef(null)
 
-  useEffect(() => {
-    if (isLoading) return
 
-    const video = videoRef.current
-    if (!video) return
-
-    // Detect mobile, tablet, or touch-capable viewports to set appropriate seek throttling
-    const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.innerWidth <= 1024
-    const seekThrottleMs = isTouchDevice ? 100 : 33
-
-    let initialized = false
-    let cleanupVideoScrub = null
-
-    const initVideoScrub = () => {
-      if (initialized) return
-      initialized = true
-
-      const duration = video.duration
-      if (!duration || isNaN(duration)) return
-
-      let targetTime = 0
-      let lastSeekTime = 0
-
-      const updateVideoTime = () => {
-        const now = performance.now()
-        if (now - lastSeekTime < seekThrottleMs) return
-
-        if (!video.seeking) {
-          if (Math.abs(video.currentTime - targetTime) > 0.04) {
-            video.currentTime = targetTime
-            lastSeekTime = now
-          }
-        }
-      }
-
-      const scrubTl = gsap.timeline({
-        scrollTrigger: {
-          id: 'bg-video-scrub',
-          trigger: 'body',
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1.0,
-        },
-        onUpdate: () => {
-          const p = scrubTl.progress()
-          targetTime = p * duration
-          updateVideoTime()
-        }
-      })
-
-      scrubTl.to({}, { duration: 1 })
-
-      const onSeeked = () => {
-        updateVideoTime()
-      }
-      video.addEventListener('seeked', onSeeked)
-
-      cleanupVideoScrub = () => {
-        video.removeEventListener('seeked', onSeeked)
-        const trigger = ScrollTrigger.getById('bg-video-scrub')
-        if (trigger) trigger.kill()
-        scrubTl.kill()
-      }
-    }
-
-    video.addEventListener('loadedmetadata', initVideoScrub)
-    if (video.readyState >= 1) initVideoScrub()
-
-    return () => {
-      video.removeEventListener('loadedmetadata', initVideoScrub)
-      if (cleanupVideoScrub) cleanupVideoScrub()
-    }
-  }, [isLoading])
 
   useEffect(() => {
     if (isLoading) return
@@ -246,17 +173,12 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Cinematic Background Video & Overlay Elements */}
-      <video
-        ref={videoRef}
-        className="bg-video"
-        src="/video/one.mp4"
-        autoPlay
-        muted
-        playsInline
-        loop
-        preload="auto"
-      />
+      {/* Cinematic Cosmic Nebula Background */}
+      <div className="cosmic-bg-container">
+        <div className="nebula nebula--amethyst" />
+        <div className="nebula nebula--teal" />
+        <div className="nebula nebula--violet" />
+      </div>
       <div className="dn-vignette" />
       <div className="dn-grain" />
 

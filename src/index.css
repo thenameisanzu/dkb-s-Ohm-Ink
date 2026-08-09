@@ -237,17 +237,70 @@ h1, h2, h3, h4, h5, h6 {
 .dn-corner--bl { bottom: 3rem; left: 3rem; transform: scaleY(-1); }
 .dn-corner--br { bottom: 3rem; right: 3rem; transform: scale(-1); }
 
-.bg-video {
+.cosmic-bg-container {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  pointer-events: none;
+  background: var(--bg-cosmic);
   z-index: 0;
-  opacity: 0.16;
-  filter: blur(5px) hue-rotate(280deg) saturate(1.2) contrast(1.15) brightness(0.75);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px) saturate(1.4);
+  -webkit-filter: blur(100px) saturate(1.4);
+  opacity: 0.85;
   mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.nebula--amethyst {
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.14) 0%, transparent 70%);
+  top: -10%;
+  right: -10%;
+  animation: floatNebula1 28s ease-in-out infinite alternate;
+}
+
+.nebula--teal {
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.07) 0%, transparent 70%);
+  bottom: -15%;
+  left: -10%;
+  animation: floatNebula2 34s ease-in-out infinite alternate;
+}
+
+.nebula--violet {
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  top: 30%;
+  left: 20%;
+  animation: floatNebula3 40s ease-in-out infinite alternate;
+}
+
+@keyframes floatNebula1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8%, 6%) scale(1.1); }
+  100% { transform: translate(-4%, -4%) scale(0.95); }
+}
+
+@keyframes floatNebula2 {
+  0% { transform: translate(0, 0) scale(0.95); }
+  50% { transform: translate(6%, -8%) scale(1.15); }
+  100% { transform: translate(-2%, 4%) scale(1); }
+}
+
+@keyframes floatNebula3 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-5%, -5%) scale(0.9); }
+  100% { transform: translate(5%, 5%) scale(1.05); }
 }
 
 /* ─── Redesigned Hero Layout ─── */
