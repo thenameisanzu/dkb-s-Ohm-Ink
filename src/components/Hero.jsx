@@ -110,18 +110,18 @@ const Hero = () => {
 
           <span
             ref={eyebrowRef}
-            className="text-teal"
             style={{
               display: 'block',
-              fontSize: '0.65rem',
-              letterSpacing: '0.5em',
+              fontSize: '0.95rem',
+              letterSpacing: '0.45em',
               textTransform: 'uppercase',
-              marginBottom: '1rem',
+              marginBottom: '1.25rem',
               opacity: 0,
               fontFamily: 'var(--font-secondary)',
             }}
           >
-            DKB'S EST. 2026
+            <span style={{ color: 'var(--color-gold)', fontWeight: '700' }}>DKB'S</span>
+            <span style={{ color: 'var(--color-text-muted)', marginLeft: '0.65rem', fontSize: '0.8rem', fontWeight: '400' }}>EST. 2016</span>
           </span>
 
           <div ref={titleRef} style={{ opacity: 0, marginBottom: '2rem' }}>

@@ -1,124 +1,126 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+// Singleton Audio instance to prevent React StrictMode range-request collisions
+let globalAudio = null
+
+const getAudioInstance = () => {
+  if (typeof window !== 'undefined' && !globalAudio) {
+    const audio = new Audio('/audio/ambient.mp3')
+    audio.preload = 'auto'
+    audio.loop = true
+    audio.volume = 0
+    audio.load() // Force aggressive background buffering immediately
+    globalAudio = audio
+  }
+  return globalAudio
+}
+
 const AudioDrone = () => {
   const [isPlaying, setIsPlaying] = useState(false)
-  const audioCtxRef = useRef(null)
-  const gainNodeRef = useRef(null)
-  const oscillatorsRef = useRef([])
+  const fadeIntervalRef = useRef(null)
+  const hasInteractedRef = useRef(false)
 
-  const initAudio = () => {
-    try {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext
-      const ctx = new AudioContextClass()
-      audioCtxRef.current = ctx
+  const fadeVolume = (targetVolume, duration, callback) => {
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current)
+    }
 
-      // 1. Gain Node for smooth fade-ins and fade-outs
-      const gainNode = ctx.createGain()
-      gainNode.gain.setValueAtTime(0, ctx.currentTime)
-      gainNodeRef.current = gainNode
+    const audio = getAudioInstance()
+    if (!audio) return
+    
+    const step = 0.05
+    const intervalTime = (duration * step) / Math.max(Math.abs(audio.volume - targetVolume), 0.01)
 
-      // 2. Filter to warm up the sound (remove harsh high frequencies)
-      const filter = ctx.createBiquadFilter()
-      filter.type = 'lowpass'
-      filter.frequency.setValueAtTime(250, ctx.currentTime) // warm cutoff
-      filter.Q.setValueAtTime(1, ctx.currentTime)
+    fadeIntervalRef.current = setInterval(() => {
+      if (targetVolume > audio.volume) {
+        audio.volume = Math.min(audio.volume + step, targetVolume)
+      } else {
+        audio.volume = Math.max(audio.volume - step, targetVolume)
+      }
 
-      // 3. LFO (Low Frequency Oscillator) to modulate filter cutoff (gives breathing wind texture)
-      const lfo = ctx.createOscillator()
-      lfo.frequency.setValueAtTime(0.08, ctx.currentTime) // extremely slow modulation
+      if (audio.volume === targetVolume) {
+        clearInterval(fadeIntervalRef.current)
+        fadeIntervalRef.current = null
+        if (callback) callback()
+      }
+    }, Math.max(intervalTime, 30))
+  }
 
-      const lfoGain = ctx.createGain()
-      lfoGain.gain.setValueAtTime(80, ctx.currentTime) // sweep range +/- 80Hz
+  const playAudio = () => {
+    const audio = getAudioInstance()
+    if (audio && audio.paused) {
+      audio.play().then(() => {
+        fadeVolume(0.4, 1500) // Smoothly fade in volume to 40% over 1.5s
+        setIsPlaying(true)
+      }).catch((err) => {
+        console.warn('Autoplay prevented or ambient.mp3 file missing from public/audio/ directory:', err)
+      })
+    }
+  }
 
-      lfo.connect(lfoGain)
-      lfoGain.connect(filter.frequency)
-
-      // 4. Fundamental Oscillators (432 Hz and 434 Hz to create a 2 Hz binaural beat)
-      const osc1 = ctx.createOscillator()
-      osc1.type = 'sine'
-      osc1.frequency.setValueAtTime(432, ctx.currentTime)
-
-      const osc2 = ctx.createOscillator()
-      osc2.type = 'sine'
-      osc2.frequency.setValueAtTime(434, ctx.currentTime)
-
-      // 5. Sub-Bass Oscillator (108 Hz, fundamental / 4, triangle wave for organic warmth)
-      const oscSub = ctx.createOscillator()
-      oscSub.type = 'triangle'
-      oscSub.frequency.setValueAtTime(108, ctx.currentTime)
-
-      // Connect nodes: Oscillators -> Filter -> Main Gain -> Output
-      osc1.connect(filter)
-      osc2.connect(filter)
-      oscSub.connect(filter)
-      filter.connect(gainNode)
-      gainNode.connect(ctx.destination)
-
-      // Start oscillators
-      osc1.start(0)
-      osc2.start(0)
-      oscSub.start(0)
-      lfo.start(0)
-
-      // Store references for cleanup
-      oscillatorsRef.current = [osc1, osc2, oscSub, lfo]
-    } catch (err) {
-      console.warn('Web Audio API not supported in this browser:', err)
+  const pauseAudio = () => {
+    const audio = getAudioInstance()
+    if (audio) {
+      fadeVolume(0, 800, () => {
+        audio.pause()
+        setIsPlaying(false)
+      })
     }
   }
 
   const togglePlay = () => {
-    const ctx = audioCtxRef.current
-    const gainNode = gainNodeRef.current
-
-    if (!ctx) {
-      // First interaction: Initialize audio context and play
-      initAudio()
-      setIsPlaying(true)
-      const targetCtx = audioCtxRef.current
-      const targetGain = gainNodeRef.current
-      if (targetCtx && targetGain) {
-        targetGain.gain.setValueAtTime(0, targetCtx.currentTime)
-        targetGain.gain.linearRampToValueAtTime(0.12, targetCtx.currentTime + 1.5) // 1.5s fade-in
-      }
-      return
-    }
-
     if (isPlaying) {
-      // Fade out and suspend
-      gainNode.gain.setValueAtTime(gainNode.gain.value, ctx.currentTime)
-      gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8) // 0.8s fade-out
-      setTimeout(() => {
-        if (ctx.state === 'running') {
-          ctx.suspend()
-        }
-      }, 850)
-      setIsPlaying(false)
+      pauseAudio()
     } else {
-      // Resume and fade in
-      if (ctx.state === 'suspended') {
-        ctx.resume()
-      }
-      gainNode.gain.setValueAtTime(0, ctx.currentTime)
-      gainNode.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 1.5) // 1.5s fade-in
-      setIsPlaying(true)
+      playAudio()
     }
   }
 
-  // Cleanup on unmount
+  // Cleanup and Autoplay triggers
   useEffect(() => {
-    return () => {
-      if (oscillatorsRef.current.length > 0) {
-        oscillatorsRef.current.forEach((osc) => {
-          try {
-            osc.stop()
-          } catch (e) {}
-        })
+    // 1. Try to play immediately on mount (if browser media engagement permits)
+    playAudio()
+
+    const handleAutoplay = () => {
+      if (!hasInteractedRef.current) {
+        hasInteractedRef.current = true
+        playAudio()
+        removeListeners()
       }
-      if (audioCtxRef.current) {
-        try {
-          audioCtxRef.current.close()
-        } catch (e) {}
+    }
+
+    const removeListeners = () => {
+      window.removeEventListener('click', handleAutoplay)
+      window.removeEventListener('keydown', handleAutoplay)
+      window.removeEventListener('touchstart', handleAutoplay)
+      window.removeEventListener('wheel', handleAutoplay)
+      window.removeEventListener('scroll', handleAutoplay)
+      window.removeEventListener('touchmove', handleAutoplay)
+    }
+
+    // 2. Bind interaction listeners for browser safety triggers
+    window.addEventListener('click', handleAutoplay)
+    window.addEventListener('keydown', handleAutoplay)
+    window.addEventListener('touchstart', handleAutoplay)
+    window.addEventListener('wheel', handleAutoplay)
+    window.addEventListener('scroll', handleAutoplay)
+    window.addEventListener('touchmove', handleAutoplay)
+
+    // 3. Periodic checker to update UI if immediate autoplay succeeded
+    const checkPlayingInterval = setInterval(() => {
+      const audio = getAudioInstance()
+      if (audio && !audio.paused) {
+        setIsPlaying(true)
+        removeListeners()
+        clearInterval(checkPlayingInterval)
+      }
+    }, 300)
+
+    return () => {
+      removeListeners()
+      clearInterval(checkPlayingInterval)
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current)
       }
     }
   }, [])

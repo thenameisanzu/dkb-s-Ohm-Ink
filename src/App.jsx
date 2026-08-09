@@ -120,32 +120,22 @@ const App = () => {
       <AudioDrone />
 
       {/* Floating Glassmorphic Navbar */}
-      <nav
-        className="glass-panel main-navbar"
-        style={{
-          position: 'fixed',
-          top: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 100,
-          borderRadius: '4px',
-        }}
-      >
+      <nav className="glass-panel main-navbar">
         {/* Logo */}
         <div
           onClick={(e) => handleNavClick(e, 'hero')}
           style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '1rem',
-            fontWeight: '700',
-            letterSpacing: '0.2em',
+            fontFamily: 'var(--font-secondary)',
+            fontSize: '0.8rem',
+            fontWeight: '800',
+            letterSpacing: '0.25em',
             color: 'var(--color-text-light)',
             textTransform: 'uppercase',
             cursor: 'pointer',
             userSelect: 'none'
           }}
         >
-          OHM<span className="text-gold">INK</span>
+          DKB'S <span className="text-gold" style={{ textShadow: '0 0 10px var(--color-gold-glow)' }}>OHM INK</span>
         </div>
 
         {/* Navigation links */}
@@ -155,17 +145,7 @@ const App = () => {
               key={section}
               href={`#${section}`}
               onClick={(e) => handleNavClick(e, section)}
-              style={{
-                fontFamily: 'var(--font-secondary)',
-                fontSize: '0.7rem',
-                letterSpacing: '0.25em',
-                textTransform: 'uppercase',
-                color: 'var(--color-text-muted)',
-                textDecoration: 'none',
-                transition: 'color 0.3s ease',
-              }}
-              onMouseEnter={(e) => (e.target.style.color = 'var(--color-gold)')}
-              onMouseLeave={(e) => (e.target.style.color = 'var(--color-text-muted)')}
+              className="nav-link-item"
             >
               {section}
             </a>
