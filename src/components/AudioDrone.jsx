@@ -169,7 +169,7 @@ const AudioDrone = () => {
           transition: 'color 0.3s ease' 
         }}
       >
-        Drone {isPlaying ? 'On' : 'Off'}
+        Resonance {isPlaying ? 'Active' : 'Muted'}
       </span>
       <div className="audio-wave-visualizer">
         <span className={`audio-wave-bar ${isPlaying ? 'playing' : ''}`} />

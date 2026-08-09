@@ -296,21 +296,13 @@ const Contact = () => {
           </a>
           <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'var(--color-teal)', opacity: 0.5 }} />
           <a
-            href="https://pinterest.com"
+            href="https://wa.me/919999999999"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link-item"
             style={{ fontSize: '0.68rem', letterSpacing: '0.3em' }}
           >
-            Pinterest
-          </a>
-          <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'var(--color-teal)', opacity: 0.5 }} />
-          <a
-            href="mailto:liaison@ohmink.com"
-            className="nav-link-item"
-            style={{ fontSize: '0.68rem', letterSpacing: '0.3em' }}
-          >
-            Liaison
+            WhatsApp
           </a>
         </div>
 

@@ -304,7 +304,7 @@ const Loader = ({ onComplete }) => {
               animation: 'pulseGlowBtn 2s infinite ease-in-out',
             }}
           >
-            Enter Sanctuary
+            Ascend Consciousness
           </button>
         </div>
       )}
