@@ -215,7 +215,7 @@ const CentralYantra = () => {
         {/* ॐ Symbol - Stationary & Centered */}
         <text
           x="200"
-          y="192"
+          y="188"
           textAnchor="middle"
           dominantBaseline="central"
           fontSize="48"

@@ -24,68 +24,60 @@ const Loader = ({ onComplete }) => {
       path.style.strokeDashoffset = length
     })
 
-    // Prevent GSAP scaling shift by setting explicit transform origin on SVG text
-    gsap.set(omRef.current, { scale: 0.7, transformOrigin: '50% 50%' })
-
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.style.overflow = ''
         gsap.to(containerRef.current, {
           opacity: 0,
-          duration: 1.2,
+          duration: 0.8,
           ease: 'power3.out',
           onComplete: onComplete
         })
       }
     })
 
-    // Cinematic sequence
+    // Cinematic sequence (Accelerated 3s total)
     tl.to(dotRef.current, {
-      scale: 1.5,
+      scale: 1.3,
       opacity: 1,
-      duration: 1,
+      duration: 0.4,
       ease: 'power2.out'
     })
     .to(dotRef.current, {
-      boxShadow: '0 0 40px var(--color-gold), 0 0 80px var(--color-teal)',
+      boxShadow: '0 0 20px var(--color-gold), 0 0 40px var(--color-teal)',
       backgroundColor: 'var(--color-teal)',
-      duration: 0.8,
-      yoyo: true,
-      repeat: 1
+      duration: 0.4,
     })
     .to(dotRef.current, {
       scale: 0.1,
       opacity: 0,
-      duration: 0.5,
+      duration: 0.3,
       ease: 'power2.in'
     })
     .to(yantraRef.current, {
       opacity: 1,
       scale: 1,
-      duration: 0.5,
+      duration: 0.3,
       ease: 'power2.out'
-    }, '-=0.2')
+    }, '-=0.1')
     .to(paths, {
       strokeDashoffset: 0,
-      duration: 2.8,
-      stagger: 0.1,
+      duration: 1.2,
+      stagger: 0.02,
       ease: 'power1.inOut'
-    }, '-=0.3')
+    }, '-=0.15')
     .to(omRef.current, {
       opacity: 1,
-      scale: 1,
-      transformOrigin: '50% 50%',
-      textShadow: '0 0 20px var(--color-gold), 0 0 40px var(--color-gold)',
-      duration: 1.5,
-      ease: 'back.out(1.7)'
-    }, '-=1.2')
-    .to(geometryRef.current, {
-      rotation: 15,
-      duration: 2,
+      duration: 0.8,
       ease: 'power2.out'
-    }, '-=1.0')
+    }, '-=0.6')
+    .to(geometryRef.current, {
+      rotation: 12,
+      duration: 1.2,
+      ease: 'power2.out'
+    }, '-=0.6')
     // Hold animation for a moment
-    .to({}, { duration: 1.2 })
+    .to({}, { duration: 0.4 })
 
   }, [onComplete])
 
@@ -239,7 +231,7 @@ const Loader = ({ onComplete }) => {
         <text
           ref={omRef}
           x="200"
-          y="192"
+          y="188"
           textAnchor="middle"
           dominantBaseline="central"
           fontSize="48"
@@ -247,8 +239,6 @@ const Loader = ({ onComplete }) => {
           fontFamily="'Yatra One', 'Cinzel Decorative', serif"
           style={{
             opacity: 0,
-            transform: 'scale(0.7)',
-            transformOrigin: '200px 200px',
             userSelect: 'none',
             pointerEvents: 'none',
             filter: 'url(#glow-loader)'
