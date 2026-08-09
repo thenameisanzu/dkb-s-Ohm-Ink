@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
 const Loader = ({ onComplete }) => {
-  const [showButton, setShowButton] = useState(false)
   const containerRef = useRef(null)
   const dotRef = useRef(null)
   const yantraRef = useRef(null)
   const geometryRef = useRef(null)
   const omRef = useRef(null)
-  const buttonRef = useRef(null)
   const pathRefs = useRef([])
 
   useEffect(() => {
@@ -28,7 +26,13 @@ const Loader = ({ onComplete }) => {
 
     const tl = gsap.timeline({
       onComplete: () => {
-        setShowButton(true)
+        document.body.style.overflow = ''
+        gsap.to(containerRef.current, {
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          onComplete: onComplete
+        })
       }
     })
 
@@ -70,27 +74,7 @@ const Loader = ({ onComplete }) => {
     // Hold animation for a moment
     .to({}, { duration: 0.4 })
 
-  }, [])
-
-  // Animate button fade-in when shown
-  useEffect(() => {
-    if (showButton && buttonRef.current) {
-      gsap.fromTo(buttonRef.current,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
-      )
-    }
-  }, [showButton])
-
-  const handleEnter = () => {
-    document.body.style.overflow = ''
-    gsap.to(containerRef.current, {
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      onComplete: onComplete
-    })
-  }
+  }, [onComplete])
 
   // Helper to render petals
   const renderPetals = (count, r) => {
@@ -259,59 +243,26 @@ const Loader = ({ onComplete }) => {
         </text>
       </svg>
 
-      {/* Conditional Bottom Section */}
-      {!showButton ? (
-        <div
-          style={{
-            marginTop: '2rem',
-            fontSize: '0.65rem',
-            letterSpacing: '0.4em',
-            textTransform: 'uppercase',
-            color: 'var(--color-gold-muted)',
-            fontFamily: 'var(--font-secondary)',
-            opacity: 0.6,
-            animation: 'pulse 2s ease-in-out infinite',
-          }}
-        >
-          Aligning Frequencies
-        </div>
-      ) : (
-        <div
-          ref={buttonRef}
-          style={{
-            marginTop: '2rem',
-            zIndex: 100,
-            opacity: 0,
-          }}
-        >
-          <button
-            onClick={handleEnter}
-            className="btn-gold"
-            style={{
-              padding: '0.85rem 2rem',
-              fontSize: '0.68rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              fontFamily: 'var(--font-secondary)',
-              fontWeight: '700',
-              cursor: 'pointer',
-              boxShadow: '0 0 25px rgba(212, 175, 55, 0.15)',
-              animation: 'pulseGlowBtn 2s infinite ease-in-out',
-            }}
-          >
-            Ascend Consciousness
-          </button>
-        </div>
-      )}
+      {/* Loading caption */}
+      <div
+        style={{
+          marginTop: '2rem',
+          fontSize: '0.65rem',
+          letterSpacing: '0.4em',
+          textTransform: 'uppercase',
+          color: 'var(--color-gold-muted)',
+          fontFamily: 'var(--font-secondary)',
+          opacity: 0.6,
+          animation: 'pulse 2s ease-in-out infinite',
+        }}
+      >
+        Aligning Frequencies
+      </div>
 
       <style>{`
         @keyframes pulse {
           0%, 100% { opacity: 0.4; }
           50% { opacity: 0.8; }
-        }
-        @keyframes pulseGlowBtn {
-          0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); }
-          50% { transform: scale(1.02); box-shadow: 0 0 25px rgba(212, 175, 55, 0.35); }
         }
       `}</style>
     </div>
