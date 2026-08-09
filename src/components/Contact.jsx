@@ -141,32 +141,39 @@ const Contact = () => {
                 <label style={{ fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-secondary)' }}>
                   Name / Identifier
                 </label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  style={{
-                    backgroundColor: 'rgba(5, 30, 26, 0.3)',
-                    border: '1px solid rgba(212, 175, 55, 0.25)',
-                    padding: '1rem',
-                    color: 'var(--color-text-light)',
-                    fontSize: '0.85rem',
-                    outline: 'none',
-                    fontFamily: 'var(--font-body)',
-                    letterSpacing: '0.05em',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--color-gold)'
-                    e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
-                    e.target.style.boxShadow = 'none'
-                  }}
-                />
+                <div className="relative-input-wrapper">
+                  <span className="focus-bracket focus-bracket--tl" />
+                  <span className="focus-bracket focus-bracket--tr" />
+                  <span className="focus-bracket focus-bracket--bl" />
+                  <span className="focus-bracket focus-bracket--br" />
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      backgroundColor: 'rgba(5, 30, 26, 0.3)',
+                      border: '1px solid rgba(212, 175, 55, 0.25)',
+                      padding: '1rem',
+                      color: 'var(--color-text-light)',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                      fontFamily: 'var(--font-body)',
+                      letterSpacing: '0.05em',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = 'var(--color-gold)'
+                      e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
+                      e.target.style.boxShadow = 'none'
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Email field */}
@@ -174,32 +181,39 @@ const Contact = () => {
                 <label style={{ fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-secondary)' }}>
                   Digital Vessel (Email)
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  style={{
-                    backgroundColor: 'rgba(5, 30, 26, 0.3)',
-                    border: '1px solid rgba(212, 175, 55, 0.25)',
-                    padding: '1rem',
-                    color: 'var(--color-text-light)',
-                    fontSize: '0.85rem',
-                    outline: 'none',
-                    fontFamily: 'var(--font-body)',
-                    letterSpacing: '0.05em',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--color-gold)'
-                    e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
-                    e.target.style.boxShadow = 'none'
-                  }}
-                />
+                <div className="relative-input-wrapper">
+                  <span className="focus-bracket focus-bracket--tl" />
+                  <span className="focus-bracket focus-bracket--tr" />
+                  <span className="focus-bracket focus-bracket--bl" />
+                  <span className="focus-bracket focus-bracket--br" />
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      backgroundColor: 'rgba(5, 30, 26, 0.3)',
+                      border: '1px solid rgba(212, 175, 55, 0.25)',
+                      padding: '1rem',
+                      color: 'var(--color-text-light)',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                      fontFamily: 'var(--font-body)',
+                      letterSpacing: '0.05em',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = 'var(--color-gold)'
+                      e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
+                      e.target.style.boxShadow = 'none'
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Placement field */}
@@ -207,32 +221,39 @@ const Contact = () => {
                 <label style={{ fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-secondary)' }}>
                   Body Placement & Geometry
                 </label>
-                <input
-                  type="text"
-                  name="placement"
-                  placeholder="e.g. Chest Center, Right Arm Sleeve"
-                  value={formData.placement}
-                  onChange={handleInputChange}
-                  style={{
-                    backgroundColor: 'rgba(5, 30, 26, 0.3)',
-                    border: '1px solid rgba(212, 175, 55, 0.25)',
-                    padding: '1rem',
-                    color: 'var(--color-text-light)',
-                    fontSize: '0.85rem',
-                    outline: 'none',
-                    fontFamily: 'var(--font-body)',
-                    letterSpacing: '0.05em',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--color-gold)'
-                    e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
-                    e.target.style.boxShadow = 'none'
-                  }}
-                />
+                <div className="relative-input-wrapper">
+                  <span className="focus-bracket focus-bracket--tl" />
+                  <span className="focus-bracket focus-bracket--tr" />
+                  <span className="focus-bracket focus-bracket--bl" />
+                  <span className="focus-bracket focus-bracket--br" />
+                  <input
+                    type="text"
+                    name="placement"
+                    placeholder="e.g. Chest Center, Right Arm Sleeve"
+                    value={formData.placement}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      backgroundColor: 'rgba(5, 30, 26, 0.3)',
+                      border: '1px solid rgba(212, 175, 55, 0.25)',
+                      padding: '1rem',
+                      color: 'var(--color-text-light)',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                      fontFamily: 'var(--font-body)',
+                      letterSpacing: '0.05em',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = 'var(--color-gold)'
+                      e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
+                      e.target.style.boxShadow = 'none'
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Session Duration / Ritual Intensity Counter (inspired by counter template) */}
@@ -356,35 +377,42 @@ const Contact = () => {
                 <label style={{ fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: 'var(--font-secondary)' }}>
                   Intent & Energy Concept
                 </label>
-                <textarea
-                  name="intent"
-                  required
-                  rows="4"
-                  placeholder="Describe the energy, vibrations, and story behind this tattoo..."
-                  value={formData.intent}
-                  onChange={handleInputChange}
-                  style={{
-                    backgroundColor: 'rgba(5, 30, 26, 0.3)',
-                    border: '1px solid rgba(212, 175, 55, 0.25)',
-                    padding: '1rem',
-                    color: 'var(--color-text-light)',
-                    fontSize: '0.85rem',
-                    outline: 'none',
-                    fontFamily: 'var(--font-body)',
-                    letterSpacing: '0.05em',
-                    lineHeight: '1.6',
-                    resize: 'none',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = 'var(--color-gold)'
-                    e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
-                    e.target.style.boxShadow = 'none'
-                  }}
-                />
+                <div className="relative-input-wrapper">
+                  <span className="focus-bracket focus-bracket--tl" />
+                  <span className="focus-bracket focus-bracket--tr" />
+                  <span className="focus-bracket focus-bracket--bl" />
+                  <span className="focus-bracket focus-bracket--br" />
+                  <textarea
+                    name="intent"
+                    required
+                    rows="4"
+                    placeholder="Describe the energy, vibrations, and story behind this tattoo..."
+                    value={formData.intent}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      backgroundColor: 'rgba(5, 30, 26, 0.3)',
+                      border: '1px solid rgba(212, 175, 55, 0.25)',
+                      padding: '1rem',
+                      color: 'var(--color-text-light)',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                      fontFamily: 'var(--font-body)',
+                      letterSpacing: '0.05em',
+                      lineHeight: '1.6',
+                      resize: 'none',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = 'var(--color-gold)'
+                      e.target.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.15)'
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = 'rgba(212, 175, 55, 0.25)'
+                      e.target.style.boxShadow = 'none'
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Submit button */}

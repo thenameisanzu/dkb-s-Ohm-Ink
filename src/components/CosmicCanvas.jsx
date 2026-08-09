@@ -30,8 +30,10 @@ const CosmicCanvas = () => {
       }
 
       reset() {
-        this.x = Math.random() * width
-        this.y = Math.random() * height
+        this.ox = Math.random() * width
+        this.oy = Math.random() * height
+        this.rx = 0
+        this.ry = 0
         this.radius = Math.random() * 2.5 + 0.5
         this.color = colors[Math.floor(Math.random() * colors.length)]
         this.vx = Math.random() * 0.4 - 0.2
@@ -42,10 +44,20 @@ const CosmicCanvas = () => {
       }
 
       update() {
-        this.x += this.vx
-        this.y += this.vy
+        this.ox += this.vx
+        this.oy += this.vy
 
         // Wrap around boundaries
+        if (this.ox < 0) this.ox = width
+        if (this.ox > width) this.ox = 0
+        if (this.oy < 0) this.oy = height
+        if (this.oy > height) this.oy = 0
+
+        // Actual positioned coordinate
+        this.x = this.ox + this.rx
+        this.y = this.oy + this.ry
+
+        // Wrap actual coordinates as well
         if (this.x < 0) this.x = width
         if (this.x > width) this.x = 0
         if (this.y < 0) this.y = height
@@ -70,12 +82,21 @@ const CosmicCanvas = () => {
           if (distance < mouse.radius) {
             const force = (mouse.radius - distance) / mouse.radius
             const angle = Math.atan2(dy, dx)
-            const pushX = Math.cos(angle) * force * 1.2
-            const pushY = Math.sin(angle) * force * 1.2
-
-            this.x += pushX
-            this.y += pushY
+            // Displacement up to 48px elastically
+            const targetRx = Math.cos(angle) * force * 48
+            const targetRy = Math.sin(angle) * force * 48
+            
+            this.rx += (targetRx - this.rx) * 0.12
+            this.ry += (targetRy - this.ry) * 0.12
+          } else {
+            // Spring back slowly when cursor goes out of range
+            this.rx += (0 - this.rx) * 0.08
+            this.ry += (0 - this.ry) * 0.08
           }
+        } else {
+          // Spring back slowly when cursor is active but leaves the document
+          this.rx += (0 - this.rx) * 0.08
+          this.ry += (0 - this.ry) * 0.08
         }
       }
 

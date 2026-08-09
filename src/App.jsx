@@ -8,6 +8,7 @@ import Hero from './components/Hero'
 import Philosophy from './components/Philosophy'
 import SymbolSection from './components/Symbol'
 import Contact from './components/Contact'
+import AudioDrone from './components/AudioDrone'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,6 +17,7 @@ const App = () => {
   const cursorRef = useRef(null)
   const followerRef = useRef(null)
   const videoRef = useRef(null)
+  const progressBarRef = useRef(null)
 
   useEffect(() => {
     if (isLoading) return
@@ -134,6 +136,27 @@ const App = () => {
     }
   }, [isLoading])
 
+  useEffect(() => {
+    if (isLoading) return
+
+    const bar = progressBarRef.current
+    if (!bar) return
+
+    const progressTrigger = ScrollTrigger.create({
+      trigger: 'body',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: (self) => {
+        gsap.set(bar, { height: `${self.progress * 100}%` })
+      }
+    })
+
+    return () => {
+      progressTrigger.kill()
+    }
+  }, [isLoading])
+
   const handleNavClick = (e, id) => {
     e.preventDefault()
     const targetElement = document.getElementById(id)
@@ -151,6 +174,14 @@ const App = () => {
       {/* Custom Cursor */}
       <div ref={cursorRef} className="custom-cursor" style={{ top: 0, left: 0 }} />
       <div ref={followerRef} className="custom-cursor-follower" style={{ top: 0, left: 0 }} />
+
+      {/* Harmonic Scroll Progress Gauge */}
+      <div className="scroll-progress-container">
+        <div ref={progressBarRef} className="scroll-progress-bar" />
+      </div>
+
+      {/* Meditative Drone Sound controller */}
+      <AudioDrone />
 
       {/* Floating Glassmorphic Navbar */}
       <nav

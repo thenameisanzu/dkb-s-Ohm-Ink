@@ -35,29 +35,50 @@ const CentralYantra = () => {
 
     // Animate yantra properties based on scroll depth
     scrollTl
-      // Scroll to Philosophy section
+      // Transition to Philosophy (Swell & fade out first, then land in place)
       .to(container, {
-        scale: 0.85,
+        scale: 1.6,
+        opacity: 0.04,
+        x: '10%',
+        duration: 0.5,
+        ease: 'power1.in'
+      })
+      .to(container, {
+        scale: 0.8,
         x: '20%',
         opacity: 0.15,
-        duration: 1,
-        ease: 'power2.inOut'
+        duration: 0.5,
+        ease: 'power1.out'
       })
-      // Scroll to Symbol section (make it central and large for interactive highlight)
+      // Transition to Symbol (Swell up as we transit, then land central & large)
+      .to(container, {
+        scale: 1.8,
+        opacity: 0.04,
+        x: '10%',
+        duration: 0.5,
+        ease: 'power1.in'
+      })
       .to(container, {
         scale: 1.1,
         x: '0%',
-        opacity: 0.25,
-        duration: 1,
-        ease: 'power2.inOut'
+        opacity: 0.24,
+        duration: 0.5,
+        ease: 'power1.out'
       })
-      // Scroll to Contact section
+      // Transition to Contact (Swell up as we transit, then shrink down to left)
       .to(container, {
-        scale: 0.65,
+        scale: 1.8,
+        opacity: 0.03,
+        x: '-10%',
+        duration: 0.5,
+        ease: 'power1.in'
+      })
+      .to(container, {
+        scale: 0.6,
         x: '-20%',
         opacity: 0.08,
-        duration: 1,
-        ease: 'power2.inOut'
+        duration: 0.5,
+        ease: 'power1.out'
       })
 
     return () => {
