@@ -132,16 +132,36 @@ const App = () => {
         <div
           onClick={(e) => handleNavClick(e, 'hero')}
           style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '0.9rem',
-            fontWeight: '500',
-            letterSpacing: '0.15em',
-            color: 'var(--color-text-light)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
             cursor: 'pointer',
             userSelect: 'none'
           }}
         >
-          dkb's <span className="text-gold" style={{ textShadow: '0 0 10px var(--color-gold-glow)' }}>ohm ink</span>
+          <img
+            src="/logo.png"
+            alt="dkb's ohm ink logo"
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              border: '1px solid rgba(223, 200, 136, 0.3)',
+              boxShadow: '0 0 10px rgba(168, 85, 247, 0.2)',
+              objectFit: 'cover'
+            }}
+          />
+          <span
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.9rem',
+              fontWeight: '500',
+              letterSpacing: '0.15em',
+              color: 'var(--color-text-light)',
+            }}
+          >
+            dkb's <span className="text-gold" style={{ textShadow: '0 0 10px var(--color-gold-glow)' }}>ohm ink</span>
+          </span>
         </div>
 
         {/* Navigation links */}
