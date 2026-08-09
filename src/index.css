@@ -1,0 +1,408 @@
+:root {
+  /* Color Palette */
+  --bg-cosmic: #05020c;
+  --bg-cosmic-gradient: radial-gradient(circle at 50% 50%, #15092a 0%, #05020c 100%);
+  --color-emerald-deep: #0f0524;
+  --color-emerald-glow: #240a45;
+  --color-teal: #a855f7;
+  --color-teal-glow: rgba(168, 85, 247, 0.4);
+  --color-gold: #dfc888;
+  --color-gold-muted: #bda25f;
+  --color-gold-glow: rgba(223, 200, 136, 0.5);
+  --color-text-light: #f4f1ea;
+  --color-text-muted: rgba(244, 241, 234, 0.65);
+  
+  /* Fonts */
+  --font-display: 'Cinzel Decorative', serif;
+  --font-secondary: 'Syne', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+
+  /* Transitions */
+  --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+/* Base resets & styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) var(--bg-cosmic);
+}
+
+body {
+  background-color: var(--bg-cosmic);
+  background-image: var(--bg-cosmic-gradient);
+  color: var(--color-text-light);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar for Chrome/Safari */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-cosmic);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.text-gold {
+  color: var(--color-gold);
+  text-shadow: 0 0 10px var(--color-gold-glow);
+}
+
+.text-teal {
+  color: var(--color-teal);
+  text-shadow: 0 0 10px var(--color-teal-glow);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(4, 18, 16, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(20, 184, 166, 0.1);
+}
+
+/* Button aesthetics */
+.btn-gold {
+  position: relative;
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  z-index: 1;
+}
+
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+  transition: all 0.6s ease;
+  z-index: -1;
+}
+
+.btn-gold:hover::before {
+  left: 100%;
+}
+
+.btn-gold:hover {
+  color: #fff;
+  background-color: rgba(212, 175, 55, 0.1);
+  border-color: var(--color-teal);
+  box-shadow: 0 0 15px var(--color-teal-glow);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Custom Cursor styling */
+.custom-cursor {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-gold);
+  box-shadow: 0 0 10px var(--color-gold-glow);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.custom-cursor-follower {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(223, 200, 136, 0.25);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.08s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.custom-cursor-follower::before,
+.custom-cursor-follower::after {
+  content: '';
+  position: absolute;
+  background-color: var(--color-gold);
+  opacity: 0.35;
+  transition: opacity 0.3s;
+}
+
+.custom-cursor-follower::before {
+  top: 50%;
+  left: -5px;
+  width: 38px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.custom-cursor-follower::after {
+  left: 50%;
+  top: -5px;
+  width: 1px;
+  height: 38px;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .custom-cursor, .custom-cursor-follower {
+    display: none;
+  }
+}
+
+/* ─── Cinematic Atmosphere Overlays ─── */
+
+.dn-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(3, 8, 8, 0.75) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.dn-grain {
+  position: fixed;
+  inset: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.dn-corner {
+  position: fixed;
+  z-index: 99;
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 0.5s ease;
+}
+
+.dn-corner--tl { top: 3rem; left: 3rem; }
+.dn-corner--tr { top: 3rem; right: 3rem; transform: scaleX(-1); }
+.dn-corner--bl { bottom: 3rem; left: 3rem; transform: scaleY(-1); }
+.dn-corner--br { bottom: 3rem; right: 3rem; transform: scale(-1); }
+
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.16;
+  filter: blur(5px) hue-rotate(280deg) saturate(1.2) contrast(1.15) brightness(0.75);
+  mix-blend-mode: screen;
+}
+
+/* ─── Redesigned Hero Layout ─── */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  width: 100%;
+  max-width: 1200px;
+  gap: 4rem;
+  align-items: center;
+  z-index: 2;
+  padding: 0 2rem;
+  text-align: left;
+}
+
+.hero-left-col {
+  position: relative;
+  padding-left: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* L-line Vertical gold divider */
+.hero-left-col::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5%;
+  height: 90%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--color-gold), transparent);
+  opacity: 0; /* Animated by GSAP */
+}
+
+.hero-right-col {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Outlined display text */
+.hero-outlined-title {
+  -webkit-text-stroke: 1px var(--color-gold);
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* Floating Glassmorphic Coordinates Card */
+.metadata-card {
+  padding: 2.5rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 320px;
+  transition: var(--transition-smooth);
+}
+
+.metadata-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metadata-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-family: var(--font-secondary);
+}
+
+.metadata-value {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-light);
+  font-family: var(--font-body);
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 3rem !important;
+    padding: 0 1.5rem !important;
+  }
+  .hero-left-col {
+    padding-left: 0 !important;
+    align-items: center !important;
+  }
+  .hero-left-col::before {
+    display: none !important;
+  }
+  .hero-right-col {
+    justify-content: center !important;
+  }
+}
+
+/* ─── Global Responsive Panels & Layouts ─── */
+
+.philosophy-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+
+.philosophy-card {
+  padding: 3rem 2.5rem;
+}
+
+.symbol-panel {
+  padding: 3rem;
+  gap: 3rem;
+}
+
+.contact-form-panel {
+  padding: 3.5rem 3rem;
+}
+
+.main-navbar {
+  width: 90%;
+  max-width: 800px;
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition-smooth);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  transition: var(--transition-smooth);
+}
+
+/* Tablet & Mobile Layout Adapters */
+@media (max-width: 768px) {
+  .philosophy-card {
+    padding: 2.25rem 1.5rem !important;
+  }
+
+  .symbol-panel {
+    padding: 1.75rem 1.25rem !important;
+    gap: 2rem !important;
+  }
+
+  .contact-form-panel {
+    padding: 2.25rem 1.5rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-navbar {
+    width: 92% !important;
+    padding: 0.85rem 1.25rem !important;
+    top: 1rem !important;
+  }
+
+  .navbar-links {
+    gap: 1rem !important;
+  }
+
+  .navbar-links a {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.15em !important;
+  }
+}
+
