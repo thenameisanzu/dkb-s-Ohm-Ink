@@ -15,6 +15,21 @@ const getAudioInstance = () => {
   return globalAudio
 }
 
+let globalPlayRef = null
+
+export const triggerAudioPlay = () => {
+  if (globalPlayRef) {
+    globalPlayRef()
+  } else {
+    const audio = getAudioInstance()
+    if (audio && audio.paused) {
+      audio.play().then(() => {
+        audio.volume = 0.4
+      }).catch(() => {})
+    }
+  }
+}
+
 const AudioDrone = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const fadeIntervalRef = useRef(null)
@@ -78,6 +93,8 @@ const AudioDrone = () => {
 
   // Cleanup and Autoplay triggers
   useEffect(() => {
+    globalPlayRef = playAudio
+
     // 1. Try to play immediately on mount (if browser media engagement permits)
     playAudio()
 
@@ -117,6 +134,7 @@ const AudioDrone = () => {
     }, 300)
 
     return () => {
+      globalPlayRef = null
       removeListeners()
       clearInterval(checkPlayingInterval)
       if (fadeIntervalRef.current) {

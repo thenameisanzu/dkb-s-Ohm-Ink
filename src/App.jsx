@@ -8,7 +8,7 @@ import Hero from './components/Hero'
 import Philosophy from './components/Philosophy'
 import SymbolSection from './components/Symbol'
 import Contact from './components/Contact'
-import AudioDrone from './components/AudioDrone'
+import AudioDrone, { triggerAudioPlay } from './components/AudioDrone'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -102,7 +102,14 @@ const App = () => {
   }
 
   if (isLoading) {
-    return <Loader onComplete={() => setIsLoading(false)} />
+    return (
+      <Loader
+        onComplete={() => {
+          setIsLoading(false)
+          triggerAudioPlay()
+        }}
+      />
+    )
   }
 
   return (
