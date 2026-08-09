@@ -61,12 +61,13 @@ const AudioDrone = () => {
     }, Math.max(intervalTime, 30))
   }
 
-  const playAudio = () => {
+  const playAudio = (onSuccess) => {
     const audio = getAudioInstance()
     if (audio && audio.paused) {
       audio.play().then(() => {
         fadeVolume(0.4, 1500) // Smoothly fade in volume to 40% over 1.5s
         setIsPlaying(true)
+        if (typeof onSuccess === 'function') onSuccess()
       }).catch((err) => {
         console.warn('Autoplay prevented or ambient.mp3 file missing from public/audio/ directory:', err)
       })
@@ -99,11 +100,9 @@ const AudioDrone = () => {
     playAudio()
 
     const handleAutoplay = () => {
-      if (!hasInteractedRef.current) {
-        hasInteractedRef.current = true
-        playAudio()
+      playAudio(() => {
         removeListeners()
-      }
+      })
     }
 
     const removeListeners = () => {
