@@ -25,24 +25,9 @@ const App = () => {
     const video = videoRef.current
     if (!video) return
 
-    // Detect mobile, tablet, or touch-capable viewports to prevent seeking stutter on Safari/Chrome
+    // Detect mobile, tablet, or touch-capable viewports to set appropriate seek throttling
     const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.innerWidth <= 1024
-
-    if (isTouchDevice) {
-      video.loop = true
-      video.muted = true
-      video.playsInline = true
-      
-      const playVideo = async () => {
-        try {
-          await video.play()
-        } catch (err) {
-          console.log('Video autoplay blocked or interrupted:', err)
-        }
-      }
-      playVideo()
-      return
-    }
+    const seekThrottleMs = isTouchDevice ? 100 : 33
 
     let initialized = false
     let cleanupVideoScrub = null
@@ -55,11 +40,16 @@ const App = () => {
       if (!duration || isNaN(duration)) return
 
       let targetTime = 0
+      let lastSeekTime = 0
 
       const updateVideoTime = () => {
+        const now = performance.now()
+        if (now - lastSeekTime < seekThrottleMs) return
+
         if (!video.seeking) {
-          if (Math.abs(video.currentTime - targetTime) > 0.03) {
+          if (Math.abs(video.currentTime - targetTime) > 0.04) {
             video.currentTime = targetTime
+            lastSeekTime = now
           }
         }
       }
@@ -261,6 +251,7 @@ const App = () => {
         ref={videoRef}
         className="bg-video"
         src="/video/one.mp4"
+        autoPlay
         muted
         playsInline
         loop
